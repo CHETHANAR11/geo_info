@@ -3,10 +3,8 @@ import axios from "axios";
 
 function App() {
   const [currLocation, setCurrLocation] = useState({});
-  const [currLocationJs, setCurrLocationJs] = useState({});
   useEffect(() => {
     getLocation();
-    getLocationJs();
   }, []);
 
   const getLocation = async () => {
@@ -14,24 +12,42 @@ function App() {
     setCurrLocation(location.data);
   };
 
-  const getLocationJs = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position);
-      const { latitude, longitude } = position.coords;
-      setCurrLocationJs({ latitude, longitude });
-    });
+  const containerStyle = {
+    textAlign: "center",
+    fontFamily: "Arial, sans-serif",
+    backgroundColor: "#f0f0f0",
+    padding: "20px",
   };
 
-  return (
-    <div>
-      <h1>Current Location</h1>
-      <p>Latitude: {currLocation.latitude}</p>
-      <p>Longitude: {currLocation.longitude}</p>
-      <p>City: {currLocation.city}</p>
+  const headingStyle = {
+    fontSize: "36px",
+    fontWeight: "bold",
+    color: "#333",
+  };
 
-      <h1>Current Location JS</h1>
-      <p>Latitude: {currLocationJs.latitude}</p>
-      <p>Longitude: {currLocationJs.longitude}</p>
+  const paragraphStyle = {
+    fontSize: "18px",
+    color: "#666",
+  };
+
+  const mediaQueryStyle = {
+    "@media (max-width: 768px)": {
+      padding: "10px", 
+      fontSize: "24px", 
+      backgroundColor:"none"
+    },
+    
+  };
+
+  
+  const mergedContainerStyle = { ...containerStyle, ...mediaQueryStyle };
+
+  return (
+    <div style={mergedContainerStyle}>
+      <h1 style={headingStyle}>Current Location</h1>
+      <p style={paragraphStyle}>Latitude: {currLocation.latitude}</p>
+      <p style={paragraphStyle}>Longitude: {currLocation.longitude}</p>
+      <p style={paragraphStyle}>City: {currLocation.city}</p>
     </div>
   );
 }
